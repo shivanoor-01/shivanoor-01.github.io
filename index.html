@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ff8e8e;
+            --accent: #ffb3b3;
+            --text: #333;
+            --light: #fff9f9;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            touch-action: manipulation;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em;
+            margin: 20px 0;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite, float 6s ease-in-out infinite;
+        }
+        
+        .heart {
+            color: var(--primary);
+            display: inline-block;
+            animation: beat 1s infinite alternate;
+            transform-origin: center;
+        }
+        
+        /* Enhanced Cake Animation */
+        .cake-container {
+            margin: 40px auto;
+            position: relative;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        
+        .cake {
+            width: 220px;
+            height: 120px;
+            background: linear-gradient(to right, #f8c291, #e55039);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: cakeFloat 4s ease-in-out infinite;
+        }
+        
+        .cake:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to right, #fad390, #f8c291);
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .cake:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10px;
+            right: 10px;
+            height: 10px;
+            background: #e55039;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .candle {
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(to bottom, #fff, #f5f5f5);
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            border-radius: 5px;
+        }
+        
+        .flame {
+            width: 18px;
+            height: 35px;
+            background: linear-gradient(to right, #ffef96, #fdcb6e, #ff7675);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            animation: flicker 0.8s infinite alternate;
+            box-shadow: 0 0 20px #fdcb6e, 0 0 40px #ffef96;
+            filter: blur(1px);
+            transition: all 0.5s ease;
+        }
+        
+        .flame.extinguished {
+            animation: none;
+            transform: translateX(-50%) scale(0.1);
+            opacity: 0;
+        }
+        
+        .smoke {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            width: 5px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 5;
+        }
+        
+        .blow-instruction {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            font-size: 0.9em;
+            color: var(--primary);
+            opacity: 0.7;
+        }
+        
+        /* Enhanced Gift Box Animation */
+        .gift-section {
+            margin: 60px auto;
+            perspective: 1000px;
+        }
+        
+        .gift-box {
+            width: 200px;
+            height: 150px;
+            background: var(--primary);
+            margin: 0 auto;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: giftFloat 5s ease-in-out infinite;
+        }
+        
+        .gift-box:hover {
+            transform: rotateY(10deg) rotateX(10deg);
+        }
+        
+        .gift-box.open {
+            transform: rotateY(180deg) translateY(-50px);
+            height: 0;
+        }
+        
+        .gift-lid {
+            width: 220px;
+            height: 30px;
+            background: var(--secondary);
+            position: absolute;
+            top: -30px;
+            left: -10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .gift-bow {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+        }
+        
+        .gift-bow:before, .gift-bow:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background: var(--accent);
+            top: 10px;
+        }
+        
+        .gift-bow:before {
+            left: -100px;
+            transform: rotate(-30deg);
+            transform-origin: right center;
+        }
+        
+        .gift-bow:after {
+            right: -100px;
+            transform: rotate(30deg);
+            transform-origin: left center;
+        }
+        
+        .gift-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            opacity: 0;
+            transition: all 0.5s ease 0.3s;
+            transform: scale(0.5) rotateY(180deg);
+        }
+        
+        .gift-box.open + .gift-content {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+            top: 150px;
+        }
+        
+        /* Photo Gallery - All with same animation (shadow glow) */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            padding: 20px;
+        }
+        
+        .photo {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            height: 300px;
+            transition: all 0.5s ease;
+        }
+        
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        
+        /* Same animation for all photos (shadow glow) */
+        .photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+        }
+        
+        .photo:hover .photo-caption {
+            transform: translateY(0);
+        }
+        
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            color: var(--primary);
+            opacity: 0;
+            animation: float-up 15s linear infinite;
+        }
+        
+        /* Message Box - Only appears after gift is opened */
+        .message-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 40px auto;
+            max-width: 800px;
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .message-box.show {
+            transform: scale(1);
+            opacity: 1;
+            animation: messageFloat 6s ease-in-out infinite;
+        }
+        
+        .message-box:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed var(--primary);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2em;
+            color: var(--primary);
+            margin-top: 20px;
+        }
+        
+        /* Animated Footer */
+        .footer {
+            margin: 50px 0 20px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .footer-heart {
+            display: inline-block;
+            font-size: 3em;
+            color: var(--primary);
+            animation: heartBeat 1.5s infinite, float 4s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .footer-heart:hover {
+            transform: scale(1.2);
+        }
+        
+        .footer-text {
+            margin-top: 10px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: var(--primary);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+        
+        .footer:hover .footer-text {
+            opacity: 1;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes beat {
+            to { transform: scale(1.3); }
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes messageFloat {
+            0%, 100% { transform: translateY(0) rotate(0.5deg); }
+            50% { transform: translateY(-5px) rotate(-0.5deg); }
+        }
+        
+        @keyframes flicker {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1, 1); 
+                opacity: 1; 
+                filter: blur(1px);
+            }
+            25% { 
+                transform: translateX(-50%) scale(0.9, 1.1); 
+                opacity: 0.9; 
+                filter: blur(1.2px);
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.1, 0.9); 
+                opacity: 0.8; 
+                filter: blur(0.8px);
+            }
+            75% { 
+                transform: translateX(-50%) scale(0.95, 1.05); 
+                opacity: 0.95; 
+                filter: blur(1.1px);
+            }
+        }
+        
+        @keyframes cakeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes smokeRise {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, -100px); opacity: 0; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .message {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <div class="container">
+        <h1>Happy Birthday, My Love! <span class="heart">❤</span></h1>
+        
+        <!-- Enhanced Cake Animation with Blow Detection -->
+        <div class="cake-container">
+            <div class="cake">
+                <div class="candle">
+                    <div class="flame" id="flame"></div>
+                    <div class="smoke" id="smoke"></div>
+                </div>
+            </div>
+            <div class="blow-instruction">Blow on the candle to make a wish!</div>
+        </div>
+        
+        <!-- Enhanced Gift Box -->
+        <div class="gift-section">
+            <div class="gift-box" id="giftBox">
+                <div class="gift-lid"></div>
+                <div class="gift-bow"></div>
+            </div>
+            <div class="gift-content" id="giftContent">
+                <img src="special-photo.jpg" alt="Our Special Moment" style="width:100%; max-height:300px; object-fit:cover; border-radius:8px;">
+                <p style="margin-top:15px; font-size:1.2em;">You are the most precious gift in my life!</p>
+            </div>
+        </div>
+        
+        <!-- Message Box (hidden until gift is opened) -->
+        <div class="message-box" id="messageBox">
+            <p class="message">
+                To the woman who makes every day brighter,<br>
+                Who fills my life with love and laughter,<br>
+                On your special day, I want you to know<br>
+                My love for you continues to grow and grow.<br><br>
+                
+                Through all these years and all these photos,<br>
+                Our love shines brighter than any rainbows.<br>
+                Happy birthday to my beautiful wife,<br>
+                You're the greatest blessing in my life.
+            </p>
+            <p class="signature">Forever yours</p>
+        </div>
+        
+        <!-- Photo Gallery -->
+        <div class="gallery" id="photoGallery">
+            <!-- Photos will be added by JavaScript -->
+        </div>
+        
+        <!-- Animated Footer -->
+        <div class="footer">
+            <div class="footer-heart" id="footerHeart">❤</div>
+            <div class="footer-text">I love you</div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const colors = ['#ff6b6b', '#ff8e8e', '#ffb3b3', '#ffd8d8'];
+            
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.className = 'heart-particle';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                container.appendChild(heart);
+            }
+        }
+        
+        // Blow to extinguish candle
+        function setupCandle() {
+            const flame = document.getElementById('flame');
+            const smoke = document.getElementById('smoke');
+            let blown = false;
+            
+            // For desktop (mouseover)
+            flame.addEventListener('mouseover', () => {
+                if (!blown) {
+                    extinguishFlame();
+                    blown = true;
+                }
+            });
+            
+            // For mobile (touch and microphone blow detection)
+            flame.addEventListener('touchstart', () => {
+                if (!blown) {
+                    extinguishFlame();
+                    blown = true;
+                }
+            });
+            
+            // Microphone blow detection
+            if (typeof window.AudioContext !== 'undefined' || typeof window.webkitAudioContext !== 'undefined') {
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    const audioContext = new AudioContext();
+                    const analyser = audioContext.createAnalyser();
+                    const microphone = audioContext.createMediaStreamSource(stream);
+                    
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(stream => {
+                            const source = audioContext.createMediaStreamSource(stream);
+                            source.connect(analyser);
+                            analyser.fftSize = 256;
+                            
+                            const bufferLength = analyser.frequencyBinCount;
+                            const dataArray = new Uint8Array(bufferLength);
+                            
+                            function detectBlow() {
+                                if (blown) return;
+                                
+                                analyser.getByteFrequencyData(dataArray);
+                                let total = 0;
+                                for (let i = 0; i < bufferLength; i++) {
+                                    total += dataArray[i];
+                                }
+                                const average = total / bufferLength;
+                                
+                                if (average > 60) { // Threshold for blow detection
+                                    extinguishFlame();
+                                    blown = true;
+                                }
+                                
+                                requestAnimationFrame(detectBlow);
+                            }
+                            
+                            detectBlow();
+                        })
+                        .catch(err => {
+                            console.log('Microphone access not available:', err);
+                        });
+                } catch (e) {
+                    console.log('Audio context not supported:', e);
+                }
+            }
+            
+            function extinguishFlame() {
+                flame.classList.add('extinguished');
+                
+                // Create smoke
+                smoke.style.animation = 'smokeRise 2s forwards';
+                setTimeout(() => {
+                    smoke.style.animation = '';
+                    smoke.style.opacity = '0';
+                }, 2000);
+                
+                // Show message
+                setTimeout(() => {
+                    alert('Your wish will come true!');
+                }, 1000);
+            }
+        }
+        
+        // Enhanced Gift Box interaction
+        function setupGiftBox() {
+            const giftBox = document.getElementById('giftBox');
+            const giftContent = document.getElementById('giftContent');
+            const messageBox = document.getElementById('messageBox');
+            let isOpen = false;
+            
+            giftBox.addEventListener('click', function() {
+                isOpen = !isOpen;
+                
+                if (isOpen) {
+                    giftBox.classList.add('open');
+                    // Add confetti when gift opens
+                    createConfetti(giftContent);
+                    // Show message box
+                    setTimeout(() => {
+                        messageBox.classList.add('show');
+                    }, 800);
+                } else {
+                    giftBox.classList.remove('open');
+                    messageBox.classList.remove('show');
+                }
+            });
+        }
+        
+        // Create confetti explosion
+        function createConfetti(element) {
+            const colors = ['#ff6b6b', '#ff8e8e', '#ffb3b3', '#ffd8d8', '#fff'];
+            const container = element || document.body;
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = (Math.random() * 100) + '%';
+                confetti.style.top = '0';
+                confetti.style.borderRadius = '50%';
+                confetti.style.opacity = '0';
+                confetti.style.transform = 'translateY(0) rotate(0deg)';
+                confetti.style.animation = `confetti-fall ${Math.random() * 2 + 1}s ease-in forwards`;
+                
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 2000);
+            }
+            
+            // Add CSS for confetti animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes confetti-fall {
+                    0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+                    10% { opacity: 1; }
+                    100% { opacity: 1; transform: translateY(300px) rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Load photos into gallery
+        function loadPhotos() {
+            const gallery = document.getElementById('photoGallery');
+            
+            // Replace this array with your actual photo URLs and captions
+            const photos = [];
+            for (let i = 1; i <= 22; i++) {
+                photos.push({
+                    url:`images/photo${i}.jpg`,
+                    caption: `Beautiful Memory #${i}`
+                });
+            }
+            
+            photos.forEach((photo, index) => {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'photo';
+                
+                const img = document.createElement('img');
+                img.src = photo.url;
+                img.alt = photo.caption;
+                
+                const caption = document.createElement('div');
+                caption.className = 'photo-caption';
+                caption.textContent = photo.caption;
+                
+                photoDiv.appendChild(img);
+                photoDiv.appendChild(caption);
+                gallery.appendChild(photoDiv);
+            });
+        }
+        
+        // Initialize everything when page loads
+        window.onload = function() {
+            createHearts();
+            setupCandle();
+            setupGiftBox();
+            loadPhotos();
+            
+            // Footer heart interaction
+            const footerHeart = document.getElementById('footerHeart');
+            footerHeart.addEventListener('click', function() {
+                createConfetti(this.parentElement);
+            });
+        };
+    </script>
+</body>
+</html>
